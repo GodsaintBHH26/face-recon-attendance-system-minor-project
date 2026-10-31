@@ -1,0 +1,12 @@
+# nodejs dependencies
+**/node_modules
+
+# python dependencies
+**/__pycache__/
+*.pyc
+
+# environmental variables
+.env
+
+# others
+.vscode
