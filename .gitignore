@@ -4,6 +4,7 @@
 # python dependencies
 **/__pycache__/
 *.pyc
+.venv
 
 # environmental variables
 .env
