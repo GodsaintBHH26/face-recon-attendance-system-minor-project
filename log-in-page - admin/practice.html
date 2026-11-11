@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>log-in</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body class="h-screen w-full flex items-center justify-center
+            bg-gradient-to-b from-[#2DA493] to-[#9CD9B8]">
+
+    <section class="w-full max-w-[400px] h-auto md:h-[425px] bg-white p-8 rounded-xl shadow-md">
+
+       <!--*************************************************-->
+       <!--  LOGIN SECTION (Visible by default)            -->
+       <!-- ************************************************-->
+
+       <div id="LoginSection" class="block">
+           <form action="/login" method="POST">
+    
+           <span class="block  text-green-600 text-[24px] font-bold text-center mb-6">Login</span><br>
+    
+           <!-- Email Container with Bottom Margin -->
+           <div class="mb-4">
+           <input type="email" placeholder="Email" 
+           class="w-full border border-gray-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600">
+           </div>
+
+           <!-- Password Container -->
+           <div class="mb-2">
+           <input type="password" placeholder="Password" class="w-full border border-gray-300 px-4 py-3 rounded-md focus:outline-none focus:ring-1 focus:ring-teal-600">
+           </div>
+    
+           <input type="checkbox" for="password"> <small>show password</small><br><br>
+    
+           <button type="submit"
+           class="w-full bg-teal-700 text-white py-[3px] px-[6px] font-semibold rounded-lg hover:bg-teal-600 cursor-pointer">
+           SIGN IN</button>
+       
+           <!--Bottom text-->
+           <p class="text-gray-600 text-center mt-6 text-[16px]">
+            Don't have an account? 
+           <span onclick="toggleForm()" class="text-teal-700 font-semibold hover:underline cursor-pointer text-[16px]">Sign up</span>
+           </p>
+
+           </form>
+       </div>
+
+
+       <!--*************************************************-->
+       <!--  SIGNUP SECTION (Hidden by default)            -->
+       <!-- ************************************************-->
+
+       <div id="SignupSection" class="hidden">
+   
+            <form action="/signin" method="POST">
+        
+            <span class="block  text-green-600 text-[24px] font-bold text-center mb-6">Signin</span><br>
+        
+            <!-- Email Container with Bottom Margin -->
+            <div class="mb-2">
+            <input type="email" placeholder="Email" 
+            class="w-full border border-gray-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600">
+            </div>
+
+            <!-- Password Container -->
+            <div class="mb-2">
+            <input type="password" placeholder="Password" class="w-full border border-gray-300 px-4 py-3 rounded-md focus:outline-none focus:ring-1 focus:ring-teal-600">
+            </div>
+            
+            <div class="mb-2">
+            <input type="password" placeholder="Confirm Password" class="w-full border border-gray-300 px-4 py-3 rounded-md focus:outline-none focus:ring-1 focus:ring-teal-600">
+            </div>
+
+            <input type="checkbox" for="password"> <small>show password</small><br><br>
+     
+            <button type="submit"
+            class="w-full bg-teal-700 text-white py-[3px] px-[6px] font-semibold rounded-lg hover:bg-teal-600 cursor-pointer">
+            SIGN IN</button>
+       
+            <!--Bottom text-->
+            <p class="text-gray-600 text-center mt-6 text-[16px]">
+             Already have an account? 
+            <span onclick="toggleForm()" class="text-teal-700 font-semibold hover:underline cursor-pointer text-[16px]">Log in</span>
+            </p>
+            </form>
+       </div>
+
+    </section>
+
+
+    <script>
+        function toggleForm(){
+            const loginSection = document.getElementById('LoginSection');
+            const signupSection = document.getElementById('SignupSection');
+
+            // Switches between display: block and display: none seamlessly
+            loginSection.classList.toggle('hidden');
+            signupSection.classList.toggle('hidden');
+        }
+    </script>
+
+</body>
+</html>

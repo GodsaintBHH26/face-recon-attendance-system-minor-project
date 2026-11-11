@@ -1,0 +1,15 @@
+# Server dependencies
+node_modules/
+
+# Secrets & Environment variables
+.env
+.env.*
+*.env
+!.env.example
+
+# Logs & temp files
+*.log
+npm-debug.log*
+temp_*.jpg
+temp_*.png
+temp_*.jpeg
