@@ -1,4 +1,4 @@
-numpy==1.26.4
+numpy
 cython
 onnx==1.16.1
 onnxruntime==1.19.2
