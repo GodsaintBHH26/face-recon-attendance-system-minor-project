@@ -3,7 +3,7 @@ from detect_face import DetectFace
 from camera import Camera
 
 
-cam=Camera(1)
+cam=Camera(0)
 detector=DetectFace()
 
 try:
