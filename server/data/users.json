@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "name": "pratyush",
+    "email": "pratyush@example.com",
+    "department": "Computer Applications",
+    "rollNo": "101",
+    "photo": "pratyush.jpg"
+  },
+  {
+    "id": "2",
+    "name": "Kunal Sarkar",
+    "email": "kunal@example.com",
+    "department": "CSE",
+    "rollNo": "102",
+    "photo": ""
+  },
+  {
+    "id": "3",
+    "name": "Riya Das",
+    "email": "riya@example.com",
+    "department": "ECE",
+    "rollNo": "103",
+    "photo": ""
+  }
+]

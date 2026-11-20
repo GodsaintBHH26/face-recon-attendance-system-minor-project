@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-100 text-slate-800">
+  <div class="min-h-screen md:flex">
+    <!-- Sidebar -->
+    <aside class="w-full bg-slate-900 text-white md:min-h-screen md:w-64">
+      <div class="flex items-center gap-3 border-b border-slate-700 px-6 py-5">
+        <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500 text-lg font-bold">A</div>
+        <div>
+          <h1 class="text-lg font-bold tracking-wide">Admin Panel</h1>
+          <p class="text-xs text-slate-400">User Management</p>
+        </div>
+      </div>
+      <nav class="flex gap-2 overflow-x-auto p-4 md:block md:space-y-2" aria-label="Main navigation">
+        <button data-page="dashboard" class="nav-link flex shrink-0 items-center gap-3 rounded-lg bg-indigo-600 px-4 py-3 text-left text-sm font-medium md:w-full">
+          <span>▦</span> Dashboard
+        </button>
+        <button data-page="add-users" class="nav-link flex shrink-0 items-center gap-3 rounded-lg px-4 py-3 text-left text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white md:w-full">
+          <span>＋</span> Add Users
+        </button>
+        <button data-page="edit-users" class="nav-link flex shrink-0 items-center gap-3 rounded-lg px-4 py-3 text-left text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white md:w-full">
+          <span>✎</span> Edit Users
+        </button>
+        <button data-page="take-attendance" class="nav-link flex shrink-0 items-center gap-3 rounded-lg px-4 py-3 text-left text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white md:w-full">
+          <span>📋</span> Take Attendance
+        </button>
+        <button data-page="attendance" class="nav-link flex shrink-0 items-center gap-3 rounded-lg px-4 py-3 text-left text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white md:w-full">
+          <span>▤</span> Attendance Analytics
+        </button>
+        <button data-page="reports" class="nav-link flex shrink-0 items-center gap-3 rounded-lg px-4 py-3 text-left text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white md:w-full">
+          <span>⇩</span> Report Generation
+        </button>
+      </nav>
+      <div class="hidden border-t border-slate-700 p-5 text-xs text-slate-400 md:block">
+        <p>Admin Workspace</p>
+        <p class="mt-1">Manage users and attendance</p>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="min-w-0 flex-1">
+      <header class="flex flex-col gap-4 border-b border-slate-200 bg-white px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+        <div>
+          <p class="text-sm text-slate-500">Workspace / <span id="breadcrumb">Dashboard</span></p>
+          <h2 id="page-title" class="mt-1 text-2xl font-bold tracking-tight">Dashboard Overview</h2>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="hidden text-right sm:block">
+            <p class="text-sm font-semibold">Administrator</p>
+            <p class="text-xs text-slate-500">System Admin</p>
+          </div>
+          <div class="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-100 font-bold text-indigo-700">AD</div>
+        </div>
+      </header>
+
+      <div class="p-5 sm:p-8">
+        <!-- Dashboard page -->
+        <section id="dashboard" class="page space-y-6">
+          <div class="rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 p-6 text-white shadow-sm sm:p-8">
+            <p class="text-sm font-medium text-indigo-100">Welcome back</p>
+            <h3 class="mt-2 text-2xl font-bold sm:text-3xl">Manage your workspace with ease.</h3>
+            <p class="mt-2 max-w-2xl text-sm leading-6 text-indigo-100">Add and update user records, review attendance trends, and generate reports from one place.</p>
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+              <p class="text-sm font-medium text-slate-500">Total Users</p>
+              <p class="mt-3 text-3xl font-bold"></p>
+            </div>
+            <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+              <p class="text-sm font-medium text-slate-500">Present Today</p>
+              <p class="mt-3 text-3xl font-bold"></p>
+              <p class="mt-2 text-xs text-emerald-600"></p>
+            </div>
+            <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+              <p class="text-sm font-medium text-slate-500">Absent Today</p>
+              <p class="mt-3 text-3xl font-bold"></p>
+              <p class="mt-2 text-xs text-rose-600"></p>
+            </div>
+            <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+              <p class="text-sm font-medium text-slate-500">Reports Generated</p>
+              <p class="mt-3 text-3xl font-bold"></p>
+              <p class="mt-2 text-xs text-slate-500">This month</p>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-bold">Quick Actions</h3>
+            <p class="mt-1 text-sm text-slate-500">Choose a task to get started.</p>
+            <div class="mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              <button data-page="add-users" class="quick-link rounded-xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-indigo-300 hover:shadow-md">
+                <span class="flex h-11 w-11 items-center justify-center rounded-lg bg-indigo-100 text-xl text-indigo-700">＋</span>
+                <span class="mt-4 block font-semibold">Add Users</span>
+                <span class="mt-1 block text-sm text-slate-500">Create a new user record.</span>
+              </button>
+              <button data-page="edit-users" class="quick-link rounded-xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-indigo-300 hover:shadow-md">
+                <span class="flex h-11 w-11 items-center justify-center rounded-lg bg-amber-100 text-xl text-amber-700">✎</span>
+                <span class="mt-4 block font-semibold">Edit Users</span>
+                <span class="mt-1 block text-sm text-slate-500">Find and update user details.</span>
+              </button>
+              <button data-page="take-attendance" class="quick-link rounded-xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-indigo-300 hover:shadow-md">
+                <span class="flex h-11 w-11 items-center justify-center rounded-lg bg-sky-100 text-xl text-sky-700">📋</span>
+                <span class="mt-4 block font-semibold">Take Attendance</span>
+                <span class="mt-1 block text-sm text-slate-500">Mark attendance for today.</span>
+              </button>
+              <button data-page="attendance" class="quick-link rounded-xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-indigo-300 hover:shadow-md">
+                <span class="flex h-11 w-11 items-center justify-center rounded-lg bg-emerald-100 text-xl text-emerald-700">▤</span>
+                <span class="mt-4 block font-semibold">Attendance Analytics</span>
+                <span class="mt-1 block text-sm text-slate-500">Review attendance summaries.</span>
+              </button>
+              <button data-page="reports" class="quick-link rounded-xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-indigo-300 hover:shadow-md">
+                <span class="flex h-11 w-11 items-center justify-center rounded-lg bg-violet-100 text-xl text-violet-700">⇩</span>
+                <span class="mt-4 block font-semibold">Report Generation</span>
+                <span class="mt-1 block text-sm text-slate-500">Prepare downloadable reports.</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+            <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4">
+              <h3 class="font-bold">Recent Activity</h3>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full min-w-[520px] text-left text-sm">
+                <thead class="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+                  <tr><th class="px-5 py-3 font-semibold">Activity</th><th class="px-5 py-3 font-semibold">User</th><th class="px-5 py-3 font-semibold">Status</th><th class="px-5 py-3 font-semibold">Time</th></tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  <tr><td class="px-5 py-4">New user added</td><td class="px-5 py-4">Kunal Sarkar</td><td class="px-5 py-4"><span class="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-medium text-emerald-700">Completed</span></td><td class="px-5 py-4 text-slate-500">09:42 AM</td></tr>
+                  <tr><td class="px-5 py-4">Attendance report created</td><td class="px-5 py-4">Admin</td><td class="px-5 py-4"><span class="rounded-full bg-blue-100 px-2.5 py-1 text-xs font-medium text-blue-700">Generated</span></td><td class="px-5 py-4 text-slate-500">Yesterday</td></tr>
+                  <tr><td class="px-5 py-4">User profile updated</td><td class="px-5 py-4">Prayutush Mondal</td><td class="px-5 py-4"><span class="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-medium text-emerald-700">Completed</span></td><td class="px-5 py-4 text-slate-500">Yesterday</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Add Users page -->
+        <section id="add-users" class="page hidden">
+          <div class="max-w-3xl rounded-xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <h3 class="text-lg font-bold">Add New User</h3>
+            <p class="mt-1 text-sm text-slate-500">Enter the user's information below.</p>
+            <form id="add-user-form" class="mt-6 grid gap-5 sm:grid-cols-2">
+              <label class="block text-sm font-medium">Full Name
+                <input required name="name" type="text" placeholder="Enter full name" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2.5 font-normal outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100" />
+              </label>
+              <label class="block text-sm font-medium">Email Address
+                <input required name="email" type="email" placeholder="Enter email" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2.5 font-normal outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100" />
+              </label>
+              <label class="block text-sm font-medium">Department
+                <select required name="department" class="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 font-normal outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100">
+                  <option value="">Select department</option><option>Computer Applications</option><option>Civil</option><option>Mechanical</option><option>ECE</option><option>CSE</option>
+                </select>
+              </label>
+              <label class="block text-sm font-medium">Roll No.
+                <input required name="name" type="number" placeholder="Enter Roll No." class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2.5 font-normal outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100" />
+              </label>
+              <!-- Live student photo capture -->
+              <div class="sm:col-span-2 rounded-xl border border-slate-200 bg-slate-50 p-4">
+                <label class="block text-sm font-semibold" for="student-camera">Student Live Photo</label>
+                <p class="mt-1 text-sm text-slate-500">Allow camera access, then take a picture of the student.</p>
+                <div class="mt-4 grid gap-4 md:grid-cols-2">
+                  <div>
+                    <video id="student-camera" autoplay playsinline class="hidden aspect-video w-full rounded-lg bg-slate-900 object-cover"></video>
+                    <canvas id="student-photo-canvas" class="hidden"></canvas>
+                    <img id="student-photo-preview" alt="Captured student photo preview" class="hidden aspect-video w-full rounded-lg border border-slate-200 bg-white object-contain" />
+                    <div id="camera-placeholder" class="flex aspect-video items-center justify-center rounded-lg border border-dashed border-slate-300 bg-white text-sm text-slate-400">Camera preview will appear here</div>
+                  </div>
+                  <div class="flex flex-col items-start justify-center gap-3">
+                    <button id="start-camera" type="button" class="rounded-lg bg-slate-800 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-700">Open Camera</button>
+                    <button id="capture-photo" type="button" disabled class="rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50">Take Picture</button>
+                    <button id="retake-photo" type="button" class="hidden rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold hover:bg-slate-100">Retake Picture</button>
+                    <p id="camera-message" class="text-sm text-slate-600" role="status">No picture captured yet.</p>
+                  </div>
+                </div>
+                <input type="hidden" name="studentPhoto" id="student-photo-data" />
+              </div>
+              <div class="sm:col-span-2"><button class="rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700" type="submit">Add User</button><p id="add-user-message" class="mt-3 text-sm text-emerald-700" role="status"></p></div>
+            </form>
+          </div>
+        </section>
+
+        <!-- Edit Users page -->
+        <section id="edit-users" class="page hidden">
+          <div class="rounded-xl border border-slate-200 bg-white shadow-sm">
+            <div class="flex flex-col gap-3 border-b border-slate-200 p-5 sm:flex-row sm:items-center sm:justify-between">
+              <div><h3 class="font-bold">User Directory</h3><p class="mt-1 text-sm text-slate-500">Search the sample list and edit a record.</p></div>
+              <input id="user-search" type="search" placeholder="Search name or email..." class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-indigo-500 sm:max-w-xs" />
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full min-w-[600px] text-left text-sm">
+                <thead class="bg-slate-50 text-xs uppercase tracking-wide text-slate-500"><tr><th class="px-5 py-3">Name</th><th class="px-5 py-3">Email</th><th class="px-5 py-3">Department</th><th class="px-5 py-3">Action</th></tr></thead>
+                <tbody id="user-table" class="divide-y divide-slate-100">
+                  <tr><td class="px-5 py-4 font-medium">Kunal Sarkar</td><td class="px-5 py-4">kunal@example.com</td><td class="px-5 py-4">Engineering</td><td class="px-5 py-4"><button class="edit-btn rounded-md border border-slate-300 px-3 py-1.5 font-medium hover:bg-slate-50">Edit</button></td></tr>
+                  <tr><td class="px-5 py-4 font-medium">Prayutus Mondal</td><td class="px-5 py-4">pr@example.com</td><td class="px-5 py-4">Finance</td><td class="px-5 py-4"><button class="edit-btn rounded-md border border-slate-300 px-3 py-1.5 font-medium hover:bg-slate-50">Edit</button></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Take Attendance page (NEW) -->
+        <section id="take-attendance" class="page hidden">
+          <div class="max-w-4xl rounded-xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h3 class="text-lg font-bold">Take Attendance</h3>
+                <p class="mt-1 text-sm text-slate-500">Mark attendance for today's class.</p>
+              </div>
+              <div class="text-sm text-slate-500" id="attendance-date-display"></div>
+            </div>
+
+            <!-- Attendance entry form -->
+            <form id="attendance-form" class="mt-6 space-y-6">
+              <!-- Live photo capture (optional) -->
+              <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                <label class="block text-sm font-semibold">Verification Photo (optional)</label>
+                <p class="mt-1 text-sm text-slate-500">Take a live photo to attach with this attendance record.</p>
+                <div class="mt-4 grid gap-4 md:grid-cols-2">
+                  <div>
+                    <video id="attendance-camera" autoplay playsinline class="hidden aspect-video w-full rounded-lg bg-slate-900 object-cover"></video>
+                    <canvas id="attendance-photo-canvas" class="hidden"></canvas>
+                    <img id="attendance-photo-preview" alt="Captured attendance photo preview" class="hidden aspect-video w-full rounded-lg border border-slate-200 bg-white object-contain" />
+                    <div id="attendance-camera-placeholder" class="flex aspect-video items-center justify-center rounded-lg border border-dashed border-slate-300 bg-white text-sm text-slate-400">Camera preview will appear here</div>
+                  </div>
+                  <div class="flex flex-col items-start justify-center gap-3">
+                    <button id="attendance-start-camera" type="button" class="rounded-lg bg-slate-800 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-700">Open Camera</button>
+                    <button id="attendance-capture-photo" type="button" disabled class="rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50">Take Picture</button>
+                    <button id="attendance-retake-photo" type="button" class="hidden rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold hover:bg-slate-100">Retake Picture</button>
+                    <p id="attendance-camera-message" class="text-sm text-slate-600" role="status">No picture captured yet.</p>
+                  </div>
+                </div>
+                <input type="hidden" id="attendance-photo-data" />
+              </div>
+
+              <!-- Submit + message -->
+              <div class="flex flex-wrap items-center gap-4">
+                <button type="submit" class="rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700">Submit Attendance</button>
+                <p id="attendance-message" class="text-sm text-emerald-700" role="status"></p>
+              </div>
+            </form>
+
+            <!-- Recent attendance records (sample) -->
+            <div class="mt-10 border-t border-slate-200 pt-6">
+              <h4 class="text-md font-semibold">Today's Attendance Log</h4>
+              <div class="mt-3 overflow-x-auto">
+                <table class="w-full min-w-[480px] text-left text-sm">
+                  <thead class="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+                    <tr><th class="px-4 py-2">Student</th><th class="px-4 py-2">Roll No.</th><th class="px-4 py-2">Status</th><th class="px-4 py-2">Time</th></tr>
+                  </thead>
+                  <tbody id="attendance-log" class="divide-y divide-slate-100">
+                    <!-- sample rows (can be updated dynamically) -->
+                    <tr><td class="px-4 py-3">Kunal Sarkar</td><td class="px-4 py-3">101</td><td class="px-4 py-3"><span class="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-700">Present</span></td><td class="px-4 py-3">09:15 AM</td></tr>
+                    <tr><td class="px-4 py-3">Prayutus Mondal</td><td class="px-4 py-3">102</td><td class="px-4 py-3"><span class="rounded-full bg-rose-100 px-2 py-0.5 text-xs font-medium text-rose-700">Absent</span></td><td class="px-4 py-3">—</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Attendance Analytics page -->
+        <section id="attendance" class="page hidden space-y-6">
+          <div class="grid gap-4 sm:grid-cols-3">
+            <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm"><p class="text-sm text-slate-500">Attendance Rate</p><p class="mt-2 text-3xl font-bold"></p><div class="mt-4 h-2 rounded-full bg-slate-100"><div class="h-2 w-[89%] rounded-full bg-emerald-500"></div></div></div>
+            <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm"><p class="text-sm text-slate-500">Present</p><p class="mt-2 text-3xl font-bold"></p><p class="mt-2 text-xs text-slate-500">Count for today</p></div>
+            <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm"><p class="text-sm text-slate-500">Absent</p><p class="mt-2 text-3xl font-bold"></p><p class="mt-2 text-xs text-slate-500">Count for today</p></div>
+          </div>
+          <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"><div><h3 class="font-bold">Weekly Attendance</h3><p class="mt-1 text-sm text-slate-500">Illustrative attendance percentage by day.</p></div></div>
+            <div class="mt-8 flex h-64 items-end justify-around gap-3 border-b border-l border-slate-200 px-3">
+              <div class="flex h-full w-10 flex-col justify-end"><div class="rounded-t-md bg-indigo-500" style="height:82%"></div><span class="mt-2 -mb-7 text-center text-xs text-slate-500">Mon</span></div>
+              <div class="flex h-full w-10 flex-col justify-end"><div class="rounded-t-md bg-indigo-500" style="height:91%"></div><span class="mt-2 -mb-7 text-center text-xs text-slate-500">Tue</span></div>
+              <div class="flex h-full w-10 flex-col justify-end"><div class="rounded-t-md bg-indigo-500" style="height:87%"></div><span class="mt-2 -mb-7 text-center text-xs text-slate-500">Wed</span></div>
+              <div class="flex h-full w-10 flex-col justify-end"><div class="rounded-t-md bg-indigo-500" style="height:94%"></div><span class="mt-2 -mb-7 text-center text-xs text-slate-500">Thu</span></div>
+              <div class="flex h-full w-10 flex-col justify-end"><div class="rounded-t-md bg-indigo-500" style="height:89%"></div><span class="mt-2 -mb-7 text-center text-xs text-slate-500">Fri</span></div>
+              <div class="flex h-full w-10 flex-col justify-end"><div class="rounded-t-md bg-indigo-500" style="height:68%"></div><span class="mt-2 -mb-7 text-center text-xs text-slate-500">Sat</span></div>
+              <div class="flex h-full w-10 flex-col justify-end"><div class="rounded-t-md bg-indigo-500" style="height:20%"></div><span class="mt-2 -mb-7 text-center text-xs text-slate-500">Sun</span></div>
+            </div>
+            
+          </div>
+        </section>
+
+        <!-- Report Generation page -->
+        <section id="reports" class="page hidden">
+          <div class="max-w-3xl rounded-xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <h3 class="text-lg font-bold">Generate a Report</h3>
+            <p class="mt-1 text-sm text-slate-500">Choose a report type and date range.</p>
+            <form id="report-form" class="mt-6 space-y-5">
+              <label class="block text-sm font-medium">Report Type
+                <select id="report-type" class="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 font-normal outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100">
+                  <option>User Directory</option><option>Daily Attendance</option><option>Monthly Attendance Summary</option>
+                </select>
+              </label>
+              <div class="grid gap-5 sm:grid-cols-2">
+                <label class="block text-sm font-medium">Start Date<input id="start-date" required type="date" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2.5 font-normal outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100" /></label>
+                <label class="block text-sm font-medium">End Date<input id="end-date" required type="date" class="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2.5 font-normal outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100" /></label>
+              </div>
+              <button type="submit" class="rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700">Generate CSV Report</button>
+              <p id="report-message" class="text-sm text-slate-600" role="status"></p>
+            </form>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const pageTitles = {
+      dashboard: "Dashboard Overview",
+      "add-users": "Add Users",
+      "edit-users": "Edit Users",
+      "take-attendance": "Take Attendance",
+      attendance: "Attendance Analytics",
+      reports: "Report Generation"
+    };
+
+    function showPage(pageId) {
+      document.querySelectorAll(".page").forEach(page => page.classList.toggle("hidden", page.id !== pageId));
+      document.querySelectorAll(".nav-link").forEach(link => {
+        const active = link.dataset.page === pageId;
+        link.classList.toggle("bg-indigo-600", active);
+        link.classList.toggle("text-white", active);
+        link.classList.toggle("text-slate-300", !active);
+      });
+      document.getElementById("page-title").textContent = pageTitles[pageId] || "Dashboard";
+      document.getElementById("breadcrumb").textContent = pageTitles[pageId] || "Dashboard";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    document.querySelectorAll("[data-page]").forEach(button => {
+      button.addEventListener("click", () => showPage(button.dataset.page));
+    });
+
+    // ---- Live student photo capture (Add Users) ----
+    const cameraVideo = document.getElementById("student-camera");
+    const photoCanvas = document.getElementById("student-photo-canvas");
+    const photoPreview = document.getElementById("student-photo-preview");
+    const cameraPlaceholder = document.getElementById("camera-placeholder");
+    const photoData = document.getElementById("student-photo-data");
+    const cameraMessage = document.getElementById("camera-message");
+    const captureButton = document.getElementById("capture-photo");
+    const retakeButton = document.getElementById("retake-photo");
+    let cameraStream = null;
+
+    function stopStudentCamera() {
+      if (cameraStream) {
+        cameraStream.getTracks().forEach(track => track.stop());
+        cameraStream = null;
+      }
+      cameraVideo.srcObject = null;
+      captureButton.disabled = true;
+    }
+
+    document.getElementById("start-camera").addEventListener("click", async () => {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        cameraMessage.textContent = "Camera access is unavailable. Open this page on HTTPS or localhost in a supported browser.";
+        return;
+      }
+      try {
+        stopStudentCamera();
+        cameraStream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: "user" },
+          audio: false
+        });
+        cameraVideo.srcObject = cameraStream;
+        cameraVideo.classList.remove("hidden");
+        photoPreview.classList.add("hidden");
+        cameraPlaceholder.classList.add("hidden");
+        captureButton.disabled = false;
+        cameraMessage.textContent = "Camera is ready. Position the student and take a picture.";
+      } catch (error) {
+        cameraMessage.textContent = "Could not access the camera. Please allow camera permission and try again.";
+      }
+    });
+
+    captureButton.addEventListener("click", () => {
+      if (!cameraStream || !cameraVideo.videoWidth) {
+        cameraMessage.textContent = "Please wait for the camera preview, then try again.";
+        return;
+      }
+      photoCanvas.width = cameraVideo.videoWidth;
+      photoCanvas.height = cameraVideo.videoHeight;
+      photoCanvas.getContext("2d").drawImage(cameraVideo, 0, 0);
+      const imageData = photoCanvas.toDataURL("image/jpeg", 0.9);
+      photoData.value = imageData;
+      photoPreview.src = imageData;
+      photoPreview.classList.remove("hidden");
+      cameraVideo.classList.add("hidden");
+      cameraPlaceholder.classList.add("hidden");
+      retakeButton.classList.remove("hidden");
+      cameraMessage.textContent = "Picture captured. It will be included with this form submission.";
+      stopStudentCamera();
+    });
+
+    retakeButton.addEventListener("click", () => {
+      photoData.value = "";
+      photoPreview.classList.add("hidden");
+      cameraPlaceholder.classList.remove("hidden");
+      retakeButton.classList.add("hidden");
+      cameraMessage.textContent = "No picture captured yet. Open the camera to take another picture.";
+    });
+
+    // ---- Add User form ----
+    document.getElementById("add-user-form").addEventListener("submit", event => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const name = form.elements.name.value.trim();
+      const hasPhoto = Boolean(photoData.value);
+      document.getElementById("add-user-message").textContent =
+        `${name} is ready to be added${hasPhoto ? " with the captured student photo" : ""} (demo only — connect a backend to save records).`;
+      form.reset();
+      stopStudentCamera();
+      photoPreview.classList.add("hidden");
+      cameraVideo.classList.add("hidden");
+      cameraPlaceholder.classList.remove("hidden");
+      retakeButton.classList.add("hidden");
+      cameraMessage.textContent = "No picture captured yet.";
+    });
+
+    // ---- User search (Edit Users) ----
+    document.getElementById("user-search").addEventListener("input", event => {
+      const term = event.target.value.toLowerCase();
+      document.querySelectorAll("#user-table tr").forEach(row => {
+        row.classList.toggle("hidden", !row.textContent.toLowerCase().includes(term));
+      });
+    });
+
+    document.querySelectorAll(".edit-btn").forEach(button => {
+      button.addEventListener("click", () => {
+        const row = button.closest("tr");
+        const currentName = row.cells[0].textContent;
+        const updatedName = prompt("Edit user name:", currentName);
+        if (updatedName && updatedName.trim()) {
+          row.cells[0].textContent = updatedName.trim();
+          // Optional: show a message (no dedicated element, so we use console or alert)
+          alert("Name updated in this demo view only. Connect a backend to save changes permanently.");
+        }
+      });
+    });
+
+    // ---- Report generation ----
+    document.getElementById("report-form").addEventListener("submit", event => {
+      event.preventDefault();
+      const start = document.getElementById("start-date").value;
+      const end = document.getElementById("end-date").value;
+      const type = document.getElementById("report-type").value;
+      if (start > end) {
+        document.getElementById("report-message").textContent = "Please choose an end date that is on or after the start date.";
+        return;
+      }
+      const rows = [
+        ["Report Type", type],
+        ["Start Date", start],
+        ["End Date", end],
+        [],
+        ["Name", "Email", "Department"],
+        ["Riya Das", "riya@example.com", "Engineering"],
+        ["Arjun Roy", "arjun@example.com", "Finance"],
+        ["Maya Sen", "maya@example.com", "Human Resources"]
+      ];
+      const csv = rows.map(row => row.map(value => {
+        const text = String(value ?? "");
+        return '"' + text.replace(/"/g, '""') + '"';
+      }).join(",")).join("\r\n");
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "admin-report.csv";
+      link.click();
+      URL.revokeObjectURL(url);
+      document.getElementById("report-message").textContent = "Demo CSV report generated and downloaded.";
+    });
+
+    // ================== TAKE ATTENDANCE LOGIC ==================
+    (function initAttendancePage() {
+      // Set today's date as default for both the date display and the date input
+      const today = new Date().toISOString().split('T')[0];
+      const dateInput = document.getElementById('attendance-date');
+      const dateDisplay = document.getElementById('attendance-date-display');
+      if (dateInput) dateInput.value = today;
+      if (dateDisplay) {
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        dateDisplay.textContent = new Date().toLocaleDateString(undefined, options);
+      }
+
+      // Prefill roll no when a student is selected (sample mapping)
+      const studentSelect = document.getElementById('attendance-student');
+      const rollInput = document.getElementById('attendance-roll');
+      const sampleRolls = {
+        'Kunal Sarkar': '101',
+        'Prayutus Mondal': '102',
+        'Riya Das': '103',
+        'Arjun Roy': '104',
+        'Maya Sen': '105'
+      };
+      if (studentSelect && rollInput) {
+        studentSelect.addEventListener('change', function() {
+          const selected = this.value;
+          rollInput.value = sampleRolls[selected] || '';
+        });
+      }
+
+      // ---- Attendance live photo capture ----
+      const attVideo = document.getElementById('attendance-camera');
+      const attCanvas = document.getElementById('attendance-photo-canvas');
+      const attPreview = document.getElementById('attendance-photo-preview');
+      const attPlaceholder = document.getElementById('attendance-camera-placeholder');
+      const attPhotoData = document.getElementById('attendance-photo-data');
+      const attMessage = document.getElementById('attendance-camera-message');
+      const attCaptureBtn = document.getElementById('attendance-capture-photo');
+      const attRetakeBtn = document.getElementById('attendance-retake-photo');
+      let attStream = null;
+
+      function stopAttCamera() {
+        if (attStream) {
+          attStream.getTracks().forEach(track => track.stop());
+          attStream = null;
+        }
+        if (attVideo) attVideo.srcObject = null;
+        if (attCaptureBtn) attCaptureBtn.disabled = true;
+      }
+
+      document.getElementById('attendance-start-camera')?.addEventListener('click', async () => {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          attMessage.textContent = "Camera access is unavailable. Use HTTPS or localhost.";
+          return;
+        }
+        try {
+          stopAttCamera();
+          attStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" }, audio: false });
+          attVideo.srcObject = attStream;
+          attVideo.classList.remove('hidden');
+          attPreview.classList.add('hidden');
+          attPlaceholder.classList.add('hidden');
+          attCaptureBtn.disabled = false;
+          attMessage.textContent = "Camera ready. Capture a photo for verification.";
+        } catch (error) {
+          attMessage.textContent = "Could not access the camera. Please allow permission.";
+        }
+      });
+
+      attCaptureBtn?.addEventListener('click', () => {
+        if (!attStream || !attVideo.videoWidth) {
+          attMessage.textContent = "Wait for camera preview, then try again.";
+          return;
+        }
+        attCanvas.width = attVideo.videoWidth;
+        attCanvas.height = attVideo.videoHeight;
+        attCanvas.getContext('2d').drawImage(attVideo, 0, 0);
+        const imageData = attCanvas.toDataURL('image/jpeg', 0.9);
+        attPhotoData.value = imageData;
+        attPreview.src = imageData;
+        attPreview.classList.remove('hidden');
+        attVideo.classList.add('hidden');
+        attPlaceholder.classList.add('hidden');
+        attRetakeBtn.classList.remove('hidden');
+        attMessage.textContent = "Photo captured. It will be attached to the attendance record.";
+        stopAttCamera();
+      });
+
+      attRetakeBtn?.addEventListener('click', () => {
+        attPhotoData.value = '';
+        attPreview.classList.add('hidden');
+        attPlaceholder.classList.remove('hidden');
+        attRetakeBtn.classList.add('hidden');
+        attMessage.textContent = "No picture captured yet. Open camera to retake.";
+      });
+
+      // Attendance form submission
+      const attendanceForm = document.getElementById('attendance-form');
+      const attendanceLog = document.getElementById('attendance-log');
+      const attendanceMsg = document.getElementById('attendance-message');
+
+      if (attendanceForm) {
+        attendanceForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const student = studentSelect.value;
+          const roll = rollInput.value.trim() || '—';
+          const status = document.getElementById('attendance-status').value;
+          const time = document.getElementById('attendance-time').value;
+          const hasPhoto = Boolean(attPhotoData.value);
+
+          if (!student) {
+            attendanceMsg.textContent = "Please select a student.";
+            attendanceMsg.classList.add('text-rose-600');
+            attendanceMsg.classList.remove('text-emerald-700');
+            return;
+          }
+
+          // Format time for display (if empty, use current time)
+          const displayTime = time || new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+          // Create log entry row
+          const tr = document.createElement('tr');
+          const statusColor = {
+            present: 'bg-emerald-100 text-emerald-700',
+            absent: 'bg-rose-100 text-rose-700',
+            late: 'bg-amber-100 text-amber-700'
+          }[status] || 'bg-slate-100 text-slate-700';
+          const statusLabel = status.charAt(0).toUpperCase() + status.slice(1);
+
+          tr.innerHTML = `
+            <td class="px-4 py-3">${student}</td>
+            <td class="px-4 py-3">${roll}</td>
+            <td class="px-4 py-3"><span class="rounded-full ${statusColor} px-2 py-0.5 text-xs font-medium">${statusLabel}</span></td>
+            <td class="px-4 py-3">${displayTime}</td>
+          `;
+          attendanceLog.prepend(tr);
+
+          // Show success message
+          attendanceMsg.textContent = `Attendance recorded for ${student} (${statusLabel})${hasPhoto ? ' with photo' : ''}.`;
+          attendanceMsg.classList.remove('text-rose-600');
+          attendanceMsg.classList.add('text-emerald-700');
+
+          // Reset form fields (but keep date)
+          studentSelect.value = '';
+          rollInput.value = '';
+          document.getElementById('attendance-status').value = 'present';
+          document.getElementById('attendance-time').value = '';
+          attPhotoData.value = '';
+          attPreview.classList.add('hidden');
+          attPlaceholder.classList.remove('hidden');
+          attRetakeBtn.classList.add('hidden');
+          attMessage.textContent = 'No picture captured yet.';
+          stopAttCamera();
+
+          // Clear success message after 3 seconds
+          setTimeout(() => { attendanceMsg.textContent = ''; }, 3000);
+        });
+      }
+
+      // Clean up camera on page change
+      const originalShowPage = window.showPage;
+      window.showPage = function(pageId) {
+        // stop attendance camera if leaving page
+        if (pageId !== 'take-attendance' && attStream) {
+          stopAttCamera();
+        }
+        // stop add-user camera if leaving page
+        if (pageId !== 'add-users' && cameraStream) {
+          stopStudentCamera();
+        }
+        originalShowPage(pageId);
+      };
+
+      // Override global showPage
+      const pageButtons = document.querySelectorAll('[data-page]');
+      pageButtons.forEach(btn => {
+        btn.removeEventListener('click', () => {});
+        btn.addEventListener('click', () => window.showPage(btn.dataset.page));
+      });
+    })();
+  </script>
+</body>
+</html>
