@@ -13,5 +13,6 @@ try:
         if cv2.waitKey(1) & 0xFF == ord("q"):
             break
 finally:
+    detector.stop()
     cam.release()
     cv2.destroyAllWindows()
